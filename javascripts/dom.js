@@ -20,7 +20,7 @@ var outputDiv = $('#dinosaurs');
 var domString = function(dinosaur) {
 	var domStrang = '';
 	 	domStrang += `<div>`;
-	 	domStrang += `<h1>${dinosaur.name}</h1>`;
+	 	domStrang += `<h1>${dinosaur.type}</h1>`;
 	 	domStrang += `</div>`;
 	 printToDom(domStrang);
 };
