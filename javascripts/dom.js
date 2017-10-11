@@ -1,31 +1,16 @@
-"use strict";
+"use strict"; 
 
-// const buildDomString = (dinosaur) => {
-// 	let domString = '';
-// 	dinosaur.forEach((dino) => {
-// 		domString += `<h1>${dino.name}</h1>`;
-// 	});
-// 	writeToDom(domString);
-// };
+const outputDiv = $('#dinosaurs');
 
-// const writeToDom = (domString) => {
-// 	$('#dinosaurs').html(domString);
-// };
-
-// module.exports = {buildDomString};
-    
-
-var outputDiv = $('#dinosaurs');
-
-var domString = function(dinosaur) {
-	var domStrang = '';
+const domString = (dinosaur) => {
+	let domStrang = '';
 	 	domStrang += `<div>`;
 	 	domStrang += `<h1>${dinosaur.type}</h1>`;
 	 	domStrang += `</div>`;
 	 printToDom(domStrang);
 };
 
-var printToDom = function(strang) {
+const printToDom = (strang) => {
 	outputDiv.append(strang);
 };
 
