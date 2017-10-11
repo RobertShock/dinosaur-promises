@@ -1,9 +1,9 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
-const dom = require('./dom');
+var dom = require('./dom');
 
-const dinosaurs = [];
+var dinosaurs = [];
 
 const firstDinosaurJSON = () => {
 	return new Promise((resolve, reject) => {
@@ -35,16 +35,51 @@ const thirdDinosaurJSON = () => {
 	});	
 };
 
+const allTheCats = () => {
+	return new Promise((resolve, reject) => {
+		$.ajax('./db/cats.json').done((data3) => {
+			resolve(data3.cats);
+		}).fail((error3) => {
+			reject(error3);
+		});
+	});	
+};
+// 	Promise.all(catsJSON().then((results) => {
+// 		console.log("results from promise.allTheCats", results);
+// 		results.forEach((result) => {
+// 			result.forEach((cat) => {
+// 				cats.push(cat);
+// 			});
+// 		});
+// 		makeCats();
+// 	}).catch((error) => {
+// 		console.log("error from promise.allTheCats", error);
+// 	});
+// };
+
+
+
+
+
+
 const dinoGetter = () => {
 	Promise.all([firstDinosaurJSON(), secondDinosaurJSON(), thirdDinosaurJSON()]).then((results) => {
-		console.log("results from promise.all", results);
-		results.forEach((result) => {
-			result.forEach((dino) => {
-				console.log("dino", dino);
-				dinosaurs.push(dino);
+		allTheCats().then((cats) => {
+			results.forEach((result) => {
+				result.forEach((dino) => {
+					dino.snacks = [];
+					dino.catIds.forEach((catId) =>{
+						cats.forEach((cat) =>{
+							if(cat.id === catId){
+								dino.snacks.push(cat);
+							}
+						});
+					});
+					dinosaurs.push(dino);
+				});
 			});
-		});
-		makeDinos();
+			makeDinos();
+		});	
 	}).catch((error) => {
 		console.log("error from promise.all", error);
 	});
